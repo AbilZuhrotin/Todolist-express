@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const todoController = require('../controllers/todo.controller');
+const todoController = require('../controllers/todo.controllers');
 
 router.get('/', todoController.getAllTodo)
 router.get('/:id', todoController.getTodoById )

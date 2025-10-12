@@ -1,4 +1,4 @@
-const usersModel = require('../models/users.model');
+const usersModel = require('../models/users');
 
 module.exports = {
     login: (req, res) => {
