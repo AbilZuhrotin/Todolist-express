@@ -1,3 +1,4 @@
+const User = require('../models/users');
 const usersModel = require('../models/users');
 
 module.exports = {
@@ -16,15 +17,23 @@ module.exports = {
     },
 
     register: (req, res) => {
-        const input = req.body; 
-        const newUser = {
-            id_user: usersModel.length + 1,
-            ...input,
-        };
-        usersModel.push(newUser);
-        res.json({
-            message: "register",
+        try {
+            const { username, fullname, email, password } = req.body;
+            const newUser = new usersModel ({
+                username,
+                fullname,
+                email,
+                password
+        });
+        newUser.save();
+        res.status(201).json({
+            message: "User berhasil ditambahkan",
             data: newUser,
         });
-    }
+    } catch (error) {
+        res.status(500).json({
+            message: "Terjadi kesalahan saat menambahkan user",
+            error: error.message,
+        });
+    }}
 };
