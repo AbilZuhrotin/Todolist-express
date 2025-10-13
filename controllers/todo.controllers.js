@@ -22,8 +22,20 @@ module.exports = {
       data:todo,
     })
   },
-  
-  createTodo: (req, res) => {},
+
+  createTodo: (req, res) => {
+    const input = req.body
+    const newTodo = {
+      id_todo: todoModel.length + 1,
+      ...input,
+    }
+    todoModel.push(newTodo)
+    res.status(201).json({
+      massage: "Todo berhasil ditambahkan",
+      data: newTodo,
+    })
+  },
+
   updateTodo: (req, res) => {},
   deleteAllTodo: (req, res) => {},
   deleteTodo: (req, res) => {},
