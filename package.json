@@ -13,8 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.1.0",
-    "moongose": "^1.0.0",
-    "dev": "nodemon app.js"
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.19.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
