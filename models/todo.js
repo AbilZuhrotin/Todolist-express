@@ -1,16 +1,13 @@
-module.exports = [
-    {
-        id_todo: 1,
-        title: "Belajar Express JS",
-        description: "Mempelajari dasar-dasar Express JS",
-        date: "2024-06-01",
-        id_user: 1
-    },
-    {
-        id_todo: 2,
-        title: "Belajar Express JS 2",
-        description: "Mempelajari berbagai fitur Express JS",
-        date: "2024-06-01",
-        id_user: 1
-    }
-]
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
+
+const todoSchema = new Schema({
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    date: { type: Date, required: true },
+    users_id: { type: Schema.Types.ObjectId, ref: 'User', required: true }
+});
+
+const todoModel = mongoose.model("Todo", todoSchema);
+
+module.exports = todoModel;
