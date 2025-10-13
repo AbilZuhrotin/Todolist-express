@@ -36,7 +36,22 @@ module.exports = {
     })
   },
 
-  updateTodo: (req, res) => {},
+  updateTodo: (req, res) => {
+    const id = req.params.id
+    const todo = todoModel.find((item) => item.id_todo === Number(id))
+    if (!todo){
+      return res.status(404).json({
+        massage: "Todo tidak ditemukan",
+      })
+    }
+    const input = req.body
+    Object.assign(todo, input)
+    res.json({
+      massage: "Todo berhasil diupdate",
+      data: todo,
+    })
+  },
+
   deleteAllTodo: (req, res) => {},
   deleteTodo: (req, res) => {},
 };
