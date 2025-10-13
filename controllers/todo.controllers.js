@@ -4,7 +4,7 @@ let todoModel = require("../models/todo");
 module.exports = {
   getAllTodo: (req, res) => {
     res.json({
-      message: "get all todo",
+      message: "Menampilkan semua todo",
       data: todoModel,
     });
   },
@@ -52,6 +52,12 @@ module.exports = {
     })
   },
 
-  deleteAllTodo: (req, res) => {},
+  deleteAllTodo: (req, res) => {
+    todoModel = []
+    res.json({
+      massage: "Semua todo berhasil dihapus",
+    }) 
+  },
+
   deleteTodo: (req, res) => {},
 };
