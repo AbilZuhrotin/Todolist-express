@@ -1,20 +1,26 @@
-const User = require('../models/users');
 const usersModel = require('../models/users');
 
 module.exports = {
-    login: (req, res) => {
-        const id = req.params.id;
-        const user = usersModel.find((item) => item.id_user === Number(id));
-        if (!user) {
-            return res.status(404).json({
-                message: "User tidak ditemukan",
+    login: async (req, res) => {
+        try {
+            const {email, password} = req.body;
+            const user = await usersModel.findOne({ email: email, password: password });
+            if (!user) {
+                return res.status(404).json({
+                    message: "User tidak ditemukan",
+                });
+            }
+            res.json({
+                message: "User ditemukan",
+                data: user,
             });
-        }
-        res.json({
-            message: "User ditemukan",
-            data: user,
+    } catch (error) {
+        res.status(500).json({
+            message: "Terjadi kesalahan saat mencari user",
+            error: error.message,
         });
-    },
+    }
+},
 
     register: (req, res) => {
         try {
