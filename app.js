@@ -4,9 +4,9 @@ const allRouter = require('./routes/index');
 
 const port = 3000 || process.env.PORT;
 
-// app.get('/', (req, res) => {
-//   res.send('Hello World!');
-// });
+app.get('/', (req, res) => {
+  res.send('Hello World!');
+});
 
 app.use(allRouter);
 
