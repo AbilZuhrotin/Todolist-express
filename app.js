@@ -1,8 +1,13 @@
 const express = require('express');
 const app = express();
 const allRouter = require('./routes/index');
+const connectToDb = require('./config/db');
 
 const port = 3000 || process.env.PORT;
+
+// Connect to MongoDB
+connectToDb();
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
