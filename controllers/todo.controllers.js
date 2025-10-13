@@ -14,11 +14,11 @@ module.exports = {
     const todo = todoModel.find((item) => item.id_todo === Number(id))
     if (!todo){
       return res.status(404).json({
-        massage: "Todo tidak ditemukan",
+        message: "Todo tidak ditemukan",
       })
     }
     res.json({
-      massage: "Todo ditemukan",
+      message: "Todo ditemukan",
       data:todo,
     })
   },
@@ -31,7 +31,7 @@ module.exports = {
     }
     todoModel.push(newTodo)
     res.status(201).json({
-      massage: "Todo berhasil ditambahkan",
+      message: "Todo berhasil ditambahkan",
       data: newTodo,
     })
   },
@@ -41,13 +41,13 @@ module.exports = {
     const todo = todoModel.find((item) => item.id_todo === Number(id))
     if (!todo){
       return res.status(404).json({
-        massage: "Todo tidak ditemukan",
+        message: "Todo tidak ditemukan",
       })
     }
     const input = req.body
     Object.assign(todo, input)
     res.json({
-      massage: "Todo berhasil diupdate",
+      message: "Todo berhasil diupdate",
       data: todo,
     })
   },
@@ -55,9 +55,24 @@ module.exports = {
   deleteAllTodo: (req, res) => {
     todoModel = []
     res.json({
-      massage: "Semua todo berhasil dihapus",
+      message: "Semua todo berhasil dihapus",
     }) 
   },
 
-  deleteTodo: (req, res) => {},
+  deleteTodo: (req, res) => {
+    const id = req.params.id
+    const idNumber = Number(id)
+    const todo = todoModel.find((item) => item.id_todo === idNumber)
+
+    if (!todo){
+      return res.status(404).json({
+        message: "Todo tidak ditemukan",
+      })
+    }
+
+    todoModel = todoModel.filter((item) => item.id_todo !== idNumber)
+    res.json({
+      message: "Todo berhasil dihapus",
+    })
+  },
 };
