@@ -71,7 +71,6 @@ module.exports = {
     await todoModel.findByIdAndUpdate(id, input, { new: true })
     res.json({
       message: "Todo berhasil diupdate",
-      data: todo,
     })
   },
 
@@ -82,20 +81,17 @@ module.exports = {
     })  
   },
 
-  deleteTodo: (req, res) => {
+  deleteTodo: async (req, res) => {
     const id = req.params.id
-    const idNumber = Number(id)
-    const todo = todoModel.find((item) => item.id_todo === idNumber)
-
+    const todo = await todoModel.findById(id)
     if (!todo){
       return res.status(404).json({
         message: "Todo tidak ditemukan",
       })
     }
-
-    todoModel = todoModel.filter((item) => item.id_todo !== idNumber)
+    await todoModel.findByIdAndDelete(id)
     res.json({
       message: "Todo berhasil dihapus",
-    })
+    })    
   },
 };
