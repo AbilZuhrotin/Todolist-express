@@ -59,16 +59,16 @@ module.exports = {
     }
   },
 
-  updateTodo: (req, res) => {
+  updateTodo: async (req, res) => {
     const id = req.params.id
-    const todo = todoModel.find((item) => item.id_todo === Number(id))
+    const todo = await todoModel.findById(id)
     if (!todo){
       return res.status(404).json({
         message: "Todo tidak ditemukan",
       })
     }
     const input = req.body
-    Object.assign(todo, input)
+    await todoModel.findByIdAndUpdate(id, input, { new: true })
     res.json({
       message: "Todo berhasil diupdate",
       data: todo,
@@ -79,7 +79,7 @@ module.exports = {
     todoModel = []
     res.json({
       message: "Semua todo berhasil dihapus",
-    }) 
+    })  
   },
 
   deleteTodo: (req, res) => {
