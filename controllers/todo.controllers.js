@@ -17,18 +17,25 @@ module.exports = {
     }
   },
 
-  getTodoById: (req, res) => {
-    const id = req.params.id
-    const todo = todoModel.find((item) => item.id_todo === Number(id))
-    if (!todo){
-      return res.status(404).json({
-        message: "Todo tidak ditemukan",
-      })
+  getTodoById: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const todo = await todoModel.findById(id);
+      if (!todo) {
+        return res.status(404).json({
+          message: "Todo tidak ditemukan",
+        });
+      }
+      res.json({
+        message: "Menampilkan todo",
+        data: todo,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Terjadi kesalahan saat mengambil todo",
+        error: error.message,
+      });
     }
-    res.json({
-      message: "Todo ditemukan",
-      data:todo,
-    })
   },
 
   createTodo: (req, res) => {
