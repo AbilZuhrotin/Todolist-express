@@ -24,16 +24,24 @@ module.exports = {
   },
 
   createTodo: (req, res) => {
-    const input = req.body
-    const newTodo = {
-      id_todo: todoModel.length + 1,
-      ...input,
-    }
-    todoModel.push(newTodo)
+    try {
+    const { title, description, date } = req.body
+    const newTodo = new todoModel ({
+      title,
+      description,
+      date
+    });
+    newTodo.save();
     res.status(201).json({
-      message: "Todo berhasil ditambahkan",
-      data: newTodo,
-    })
+            message: "todo berhasil ditambahkan",
+            data: newTodo,
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Terjadi kesalahan saat menambahkan todo",
+            error: error.message,
+        });
+    }
   },
 
   updateTodo: (req, res) => {
