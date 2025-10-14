@@ -2,11 +2,19 @@
 let todoModel = require("../models/todo");
 
 module.exports = {
-  getAllTodo: (req, res) => {
-    res.json({
-      message: "Menampilkan semua todo",
-      data: todoModel,
-    });
+  getAllTodo: async (req, res) => {
+    try {
+      const todos = await todoModel.find();
+      res.json({
+        message: "Menampilkan semua todo",
+        data: todos,
+      });
+    } catch (error) {
+      res.status(500).json({
+        message: "Terjadi kesalahan saat mengambil todo",
+        error: error.message,
+      });
+    }
   },
 
   getTodoById: (req, res) => {
