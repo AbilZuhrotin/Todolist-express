@@ -4,7 +4,7 @@ let todoModel = require("../models/todo");
 module.exports = {
   getAllTodo: async (req, res) => {
     try {
-      const todos = await todoModel.find();
+      const todos = await todoModel.find().populate('users_id');
       res.json({
         message: "Menampilkan semua todo",
         data: todos,
@@ -40,11 +40,12 @@ module.exports = {
 
   createTodo: (req, res) => {
     try {
-    const { title, description, date } = req.body
+    const { title, description, date, users_id } = req.body
     const newTodo = new todoModel ({
       title,
       description,
-      date
+      date,
+      users_id
     });
     newTodo.save();
     res.status(201).json({
