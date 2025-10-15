@@ -74,11 +74,18 @@ module.exports = {
     })
   },
 
-  deleteAllTodo: (req, res) => {
-    todoModel = []
-    res.json({
-      message: "Semua todo berhasil dihapus",
-    })  
+  deleteAllTodo: async (req, res) => {
+    try {
+      await todoModel.deleteMany({})
+      res.json({
+        message: "Semua todo berhasil dihapus",
+      })
+    } catch (error) {
+      res.status(500).json({
+        message: "Terjadi kesalahan saat menghapus semua todo",
+        error: error.message,
+      })
+    }
   },
 
   deleteTodo: async (req, res) => {
