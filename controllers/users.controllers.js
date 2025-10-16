@@ -53,7 +53,7 @@ module.exports = {
 
     register: async (req, res) => {
         try {
-            const { username, fullname, email, password } = req.body;
+            const { username, fullname, email, password, role } = req.body;
 
             const duplikatEmail = await usersModel.findOne({ email });
             if (duplikatEmail) {
@@ -69,7 +69,8 @@ module.exports = {
                 username,
                 fullname,
                 email,
-                password: hash
+                password: hash,
+                role
         });
         newUser.save();
         res.status(201).json({
