@@ -1,4 +1,6 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require('dotenv').config();
 const usersModel = require('../models/users');
 
 module.exports = {
@@ -32,10 +34,15 @@ module.exports = {
                     message: "Password salah",
                 });
             }
+            const token = jwt.sign({   
+                id: user._id,
+                username: user.username, 
+                email: user.email }, 
+                process.env.JWT_SECRET, 
+                { expiresIn: '5h' });
             res.json({
                 message: "Login berhasil",
-                data: user,
-            });
+                token            });
     } catch (error) {
         res.status(500).json({
             message: "Terjadi kesalahan saat mencari user",
@@ -44,11 +51,11 @@ module.exports = {
     }
 },
 
-    register: (req, res) => {
+    register: async (req, res) => {
         try {
             const { username, fullname, email, password } = req.body;
 
-            const duplikatEmail = usersModel.findOne({ email });
+            const duplikatEmail = await usersModel.findOne({ email });
             if (duplikatEmail) {
                 return res.status(400).json({
                     message: "Email sudah terdaftar",
