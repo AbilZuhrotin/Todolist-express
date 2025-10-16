@@ -37,7 +37,8 @@ module.exports = {
             const token = jwt.sign({   
                 id: user._id,
                 username: user.username, 
-                email: user.email }, 
+                email: user.email,
+                role: user.role}, 
                 process.env.JWT_SECRET, 
                 { expiresIn: '5h' });
             res.json({
@@ -70,7 +71,7 @@ module.exports = {
                 fullname,
                 email,
                 password: hash,
-                role
+                role: role || 'user'
         });
         newUser.save();
         res.status(201).json({
