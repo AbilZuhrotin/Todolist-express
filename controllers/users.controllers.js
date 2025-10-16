@@ -1,6 +1,21 @@
 const usersModel = require('../models/users');
 
 module.exports = {
+    getAllUsers: async (req, res) => {
+        try {
+            const users = await usersModel.find();  
+            res.json({
+                message: "Menampilkan semua user",
+                data: users,
+            });
+        } catch (error) {
+            res.status(500).json({
+                message: "Terjadi kesalahan saat mengambil user",
+                error: error.message,
+            });
+        }
+    },
+    
     login: async (req, res) => {
         try {
             const {email, password} = req.body;

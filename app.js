@@ -10,7 +10,7 @@ connectToDb();
 
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello Welcome Todolist Express!');
 });
 
 app.use(express.json()) // Menangkap req body dalam format json
